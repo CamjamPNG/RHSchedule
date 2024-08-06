@@ -8,7 +8,7 @@
         html, body {
             margin: 0;
             padding: 0;
-            overflow: auto; /* Allow scrolling on body */
+            overflow: auto; /* Allow scrolling on the body */
             height: 100%; /* Ensure body takes full height */
         }
         body {
@@ -30,14 +30,13 @@
             padding: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             margin: 20px; /* Add margin to ensure spacing */
-            height: auto; /* Allow height to grow with content */
+            overflow: auto; /* Allow scrolling within the container if necessary */
         }
         .content {
             display: flex;
             flex-direction: row;
             gap: 20px;
-            height: auto;
-            overflow: auto; /* Allows scrolling if content overflows */
+            flex-wrap: nowrap;
         }
         .main-content, .side-content {
             padding: 20px;
@@ -45,6 +44,8 @@
             background: #2c2c2c; /* Darker background for sections */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             flex: 1;
+            max-height: 100%; /* Ensure sections don't exceed container height */
+            overflow: auto; /* Allows scrolling if content overflows */
         }
         .main-content {
             flex: 3;
@@ -259,11 +260,27 @@
         }
 
         function exportToPNG() {
-            html2canvas(document.querySelector('#preview-container')).then(canvas => {
+            const previewContainer = document.querySelector('#preview-container');
+
+            // Ensure full content capture by extending the height of the container
+            previewContainer.style.position = 'absolute';
+            previewContainer.style.top = '0';
+            previewContainer.style.left = '0';
+            previewContainer.style.width = '100%';
+            previewContainer.style.height = 'auto';
+
+            html2canvas(previewContainer, {scrollY: -window.scrollY}).then(canvas => {
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
                 link.download = 'schedule.png';
                 link.click();
+
+                // Reset styles after export
+                previewContainer.style.position = '';
+                previewContainer.style.top = '';
+                previewContainer.style.left = '';
+                previewContainer.style.width = '';
+                previewContainer.style.height = '';
             });
         }
     </script>
