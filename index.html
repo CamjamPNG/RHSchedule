@@ -15,7 +15,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow: hidden; /* Hide any overflow on the body */
         }
         .container {
             display: flex;
@@ -26,24 +26,27 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            height: 90%;
-            overflow: auto; /* Allows scrolling if content overflows */
+            height: 90vh; /* Set a maximum height for the container */
+            overflow: hidden; /* Hide any overflow on the container */
         }
         .content {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 20px;
+            height: 100%;
+            overflow: auto; /* Allows scrolling if content overflows */
         }
         .main-content, .side-content {
             padding: 20px;
             border-radius: 12px;
-            background: #2c2c2c; /* Darker background for sidebar */
+            background: #2c2c2c; /* Darker background for sections */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            max-height: 600px;
+            flex: 1;
+            max-height: 100%;
             overflow: auto; /* Allows scrolling if content overflows */
         }
         .main-content {
-            flex: 2;
+            flex: 3;
         }
         .side-content {
             flex: 1;
@@ -145,12 +148,14 @@
         @media (max-width: 800px) {
             .container {
                 padding: 10px;
+                height: auto; /* Ensure container height adjusts to content */
             }
             .content {
                 flex-direction: column;
+                height: auto; /* Ensure content height adjusts to content */
             }
             .main-content, .side-content {
-                max-height: none;
+                max-height: none; /* Allow sections to expand as needed */
             }
             .form-group textarea {
                 height: 100px;
