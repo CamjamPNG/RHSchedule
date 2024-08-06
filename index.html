@@ -262,14 +262,17 @@
         function exportToPNG() {
             const previewContainer = document.querySelector('#preview-container');
 
-            // Ensure full content capture by extending the height of the container
+            // Ensure the container is expanded to its full content height
             previewContainer.style.position = 'absolute';
             previewContainer.style.top = '0';
             previewContainer.style.left = '0';
             previewContainer.style.width = '100%';
-            previewContainer.style.height = 'auto';
+            previewContainer.style.height = 'auto';  // Ensure the height is auto to capture all content
 
-            html2canvas(previewContainer, {scrollY: -window.scrollY}).then(canvas => {
+            // Temporarily make the container visible and take a snapshot of the full content
+            document.body.style.overflow = 'hidden'; // Prevent scrollbars from appearing during export
+
+            html2canvas(previewContainer, { scrollY: -window.scrollY, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
                 link.download = 'schedule.png';
@@ -281,6 +284,8 @@
                 previewContainer.style.left = '';
                 previewContainer.style.width = '';
                 previewContainer.style.height = '';
+
+                document.body.style.overflow = ''; // Restore overflow style
             });
         }
     </script>
