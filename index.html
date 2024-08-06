@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Schedule Generator</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: auto; /* Allow scrolling on body */
+            height: 100%; /* Ensure body takes full height */
+        }
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #121212; /* Dark background color */
             color: #e0e0e0; /* Light text color */
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden; /* Hide any overflow on the body */
         }
         .container {
             display: flex;
@@ -26,14 +29,14 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            height: 90vh; /* Set a maximum height for the container */
-            overflow: hidden; /* Hide any overflow on the container */
+            margin: 20px; /* Add margin to ensure spacing */
+            height: auto; /* Allow height to grow with content */
         }
         .content {
             display: flex;
             flex-direction: row;
             gap: 20px;
-            height: 100%;
+            height: auto;
             overflow: auto; /* Allows scrolling if content overflows */
         }
         .main-content, .side-content {
@@ -42,8 +45,6 @@
             background: #2c2c2c; /* Darker background for sections */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             flex: 1;
-            max-height: 100%;
-            overflow: auto; /* Allows scrolling if content overflows */
         }
         .main-content {
             flex: 3;
@@ -146,16 +147,8 @@
             margin-bottom: 6px;
         }
         @media (max-width: 800px) {
-            .container {
-                padding: 10px;
-                height: auto; /* Ensure container height adjusts to content */
-            }
             .content {
                 flex-direction: column;
-                height: auto; /* Ensure content height adjusts to content */
-            }
-            .main-content, .side-content {
-                max-height: none; /* Allow sections to expand as needed */
             }
             .form-group textarea {
                 height: 100px;
